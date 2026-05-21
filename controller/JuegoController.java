@@ -27,6 +27,7 @@ public class JuegoController {
     private final PuntajeController puntaje;
     private final CajaController caja;
     private final InventarioController inventario;
+    private GeneradorOrdenes generador;
 
     private final List<Receta> recetas;
     private EstadoJuego estado;
@@ -54,6 +55,8 @@ public class JuegoController {
      * Inicializa y arranca el juego.
      */
     public void iniciarJuego() {
+        RecetaFactory.todasLasRecetas().forEach(this::agregarReceta);
+        this.generador = new GeneradorOrdenes(recetas, caja, TIEMPO_POR_ORDEN);
         estado = EstadoJuego.JUGANDO;
         ticksDesdeUltimaOrden = INTERVALO_NUEVA_ORDEN;
         tick();
@@ -100,7 +103,7 @@ public class JuegoController {
         }
 
         if (ticksDesdeUltimaOrden >= INTERVALO_NUEVA_ORDEN) {
-            generarOrdenAleatoria();
+            generador.generarOrden();
             ticksDesdeUltimaOrden = 0;
         }
 
