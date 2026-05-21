@@ -19,7 +19,6 @@ public class Orden implements IValidable {
 
     private final UUID id;
     private final int numeroOrden;
-    private final Pizza pizza;
     private final Receta receta;
     private EstadoOrden estado;
     private final LocalDateTime timestamp;
@@ -27,10 +26,9 @@ public class Orden implements IValidable {
 
     private static int contadorOrdenes = 0;
 
-    public Orden(Pizza pizza, Receta receta, int tiempoLimite) {
+    public Orden(Receta receta, int tiempoLimite) {
         this.id = UUID.randomUUID();
         this.numeroOrden = ++contadorOrdenes;
-        this.pizza = pizza;
         this.receta = receta;
         this.estado = EstadoOrden.RECIBIDA;
         this.timestamp = LocalDateTime.now();
@@ -64,10 +62,6 @@ public class Orden implements IValidable {
 
         if (receta == null) {
             errores.add("La orden no tiene receta asociada.");
-        }
-
-        if (pizza == null) {
-            errores.add("La orden no tiene pizza asociada.");
         } else {
             errores.addAll(pizza.getErrores());
         }

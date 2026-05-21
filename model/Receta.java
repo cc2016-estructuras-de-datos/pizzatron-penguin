@@ -80,16 +80,6 @@ public class Receta {
         return toppingsPizza.equals(toppingsReceta);
     }
 
-    /**
-     * Construye una pizza base usando los ingredientes de esta receta,
-     * para que CocinaController la tome como punto de partida.
-     *
-     * @return pizza con base y salsa listos, sin toppings
-     */
-    public Pizza construirPizzaBase() {
-        return new Pizza(nombre, baseRequerida, salsaRequerida);
-    }
-
     public UUID getId() {
         return id;
     }
@@ -105,17 +95,15 @@ public class Receta {
     public Salsa getSalsaRequerida() {
         return salsaRequerida;
     }
-
-    public List<Topping> getToppingsRequeridos() {
-        return Collections.unmodifiableList(toppingsRequeridos);
-    }
-
     public int getRecompensaMonedas() {
         return recompensaMonedas;
     }
-
     public int getTiempoCoccion() {
         return tiempoCoccion;
+    }
+
+    public List<Topping> getToppingsRequeridos() {
+        return Collections.unmodifiableList(toppingsRequeridos);
     }
 
     @Override
