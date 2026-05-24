@@ -42,19 +42,17 @@ public class CajaController {
     /**
      * Recibe una nueva orden, la valida y la encola si es procesable.
      *
-     * @param receta     receta que debe cumplirse
+     * @param receta       receta que debe cumplirse
      * @param tiempoLimite segundos disponibles para completar la orden
      * @return la orden creada
      */
-    @Override
-    public List<String> getErrores() {
-    List<String> errores = new ArrayList<>();
-
-        if (receta == null) {
-            errores.add("La orden no tiene receta asociada.");
+    public Orden recibirOrden(Receta receta, int tiempoLimite) {
+        Orden orden = new Orden(receta, tiempoLimite);
+        if (orden.validar()) {
+            orden.setEstado(EstadoOrden.EN_COLA);
+            colaOrdenes.add(orden);
         }
-
-        return errores;
+        return orden;
     }
 
     /**

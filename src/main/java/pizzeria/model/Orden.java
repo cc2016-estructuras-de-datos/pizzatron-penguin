@@ -59,13 +59,9 @@ public class Orden implements IValidable {
     @Override
     public List<String> getErrores() {
         List<String> errores = new ArrayList<>();
-
         if (receta == null) {
             errores.add("La orden no tiene receta asociada.");
-        } else {
-            errores.addAll(pizza.getErrores());
         }
-
         return errores;
     }
 
@@ -75,10 +71,6 @@ public class Orden implements IValidable {
 
     public int getNumeroOrden() {
         return numeroOrden;
-    }
-
-    public Pizza getPizza() {
-        return pizza;
     }
 
     public Receta getReceta() {

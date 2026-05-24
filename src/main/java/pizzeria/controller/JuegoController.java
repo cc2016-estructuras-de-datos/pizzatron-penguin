@@ -4,7 +4,11 @@ import pizzeria.model.Orden;
 import pizzeria.model.Pizza;
 import pizzeria.model.Receta;
 import pizzeria.model.enums.EstadoJuego;
-import pizzeria.model.ingredient.Ingrediente;
+import pizzeria.model.enums.TipoMasa;
+import pizzeria.model.enums.TipoSalsa;
+import pizzeria.model.ingredient.*;
+import pizzeria.util.GeneradorOrdenes;
+import pizzeria.util.RecetaFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,11 +59,24 @@ public class JuegoController {
      * Inicializa y arranca el juego.
      */
     public void iniciarJuego() {
+        inicializarInventario();
         RecetaFactory.todasLasRecetas().forEach(this::agregarReceta);
         this.generador = new GeneradorOrdenes(recetas, caja, TIEMPO_POR_ORDEN);
         estado = EstadoJuego.JUGANDO;
         ticksDesdeUltimaOrden = INTERVALO_NUEVA_ORDEN;
         tick();
+    }
+
+    private void inicializarInventario() {
+        inventario.registrarIngrediente(new Base(TipoMasa.CLASICA), 99);
+        inventario.registrarIngrediente(new Base(TipoMasa.INTEGRAL), 99);
+        inventario.registrarIngrediente(new Salsa(TipoSalsa.NORMAL), 99);
+        inventario.registrarIngrediente(new Salsa(TipoSalsa.PICANTE), 99);
+        inventario.registrarIngrediente(new Pescado(), 99);
+        inventario.registrarIngrediente(new Camarones(), 99);
+        inventario.registrarIngrediente(new Alga(), 99);
+        inventario.registrarIngrediente(new Calamar(), 99);
+        inventario.registrarIngrediente(new Hielo(), 99);
     }
 
     public void pausarJuego() {
